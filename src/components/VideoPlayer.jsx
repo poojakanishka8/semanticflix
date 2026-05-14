@@ -41,21 +41,16 @@ export default function VideoPlayer() {
           animate={{ scale: 1, y: 0 }}
           exit={{ scale: 0.9, y: 20 }}
           className="relative w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-neon border border-white/10"
-          onClick={(e) => e.stopPropagation()} // Prevent click from closing when clicking video
+          onClick={(e) => e.stopPropagation()}
         >
-          {/* Using a more reliable HTTPS sample video */}
-          <video 
-            className="w-full h-full object-contain"
-            controls 
-            autoPlay 
-            muted
-            playsInline
-            name="media"
-            poster={playingMovie.banner}
-          >
-            <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          {/* Using a high-quality YouTube trailer embed for maximum compatibility */}
+          <iframe 
+            className="w-full h-full border-0"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&rel=0&modestbranding=1" 
+            title="SemanticFlix Video Player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowFullScreen
+          ></iframe>
         </motion.div>
       </motion.div>
     </AnimatePresence>
