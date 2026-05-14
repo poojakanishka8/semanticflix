@@ -78,7 +78,10 @@ export default function Home() {
             </p>
             
             <div className="flex flex-wrap items-center gap-4">
-              <button className="flex items-center gap-2 bg-primary hover:bg-accent text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105 hover:shadow-neon">
+              <button 
+                onClick={() => openVideo(featuredMovie)}
+                className="flex items-center gap-2 bg-primary hover:bg-accent text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105 hover:shadow-neon"
+              >
                 <Play className="w-5 h-5 fill-white" />
                 Watch Now
               </button>

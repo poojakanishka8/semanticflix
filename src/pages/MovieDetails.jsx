@@ -8,7 +8,7 @@ import { useStore } from '../store/useStore';
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const { favorites, addFavorite, removeFavorite, movies, fetchMovies } = useStore();
+  const { favorites, addFavorite, removeFavorite, movies, fetchMovies, openVideo } = useStore();
 
   useEffect(() => {
     fetchMovies();
@@ -81,7 +81,10 @@ export default function MovieDetails() {
               </p>
 
               <div className="flex items-center gap-4">
-                <button className="flex items-center gap-2 bg-primary hover:bg-accent text-white px-8 py-3 rounded-md font-bold transition-all hover:scale-105 shadow-neon">
+                <button 
+                  onClick={() => openVideo(movie)}
+                  className="flex items-center gap-2 bg-primary hover:bg-accent text-white px-8 py-3 rounded-md font-bold transition-all hover:scale-105 shadow-neon"
+                >
                   <Play className="w-5 h-5 fill-white" /> Play Trailer
                 </button>
                 <button 
