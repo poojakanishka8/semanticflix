@@ -2,13 +2,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, User, LogOut, Settings, CreditCard, ChevronRight } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   const { user, logout, isLoggedIn } = useStore();
-  const [isOpen, setIsOpen] = [false, () => {}]; // We'll manage this via store or local state
+  const navigate = useNavigate();
 
-  // This is a modal component, but we can make it a full page or a dropdown.
-  // Let's create a dedicated Profile page instead for better UX.
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <div className="min-h-screen pt-32 pb-20 container mx-auto px-4 md:px-8">
@@ -38,7 +41,7 @@ export default function Profile() {
               </div>
             </button>
             <button 
-              onClick={logout}
+              onClick={handleLogout}
               className="w-full flex items-center justify-between px-4 py-3 text-red-400 hover:text-red-300 hover:bg-red-400/5 rounded-xl transition-all"
             >
               <div className="flex items-center gap-3">
