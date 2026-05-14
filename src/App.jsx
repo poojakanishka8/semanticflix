@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import VideoPlayer from './components/VideoPlayer';
 
 // Pages
 import Home from './pages/Home';
@@ -31,6 +32,7 @@ function AppContent() {
     <div className="flex flex-col min-h-screen bg-background text-white selection:bg-primary/30">
       <ScrollToTop />
       {!isLoginPage && <Navbar />}
+      <VideoPlayer />
       
       <main className="flex-grow">
         <AnimatePresence mode="wait">

@@ -12,6 +12,12 @@ export const useStore = create(
       genres: [],
       isLoading: false,
       error: null,
+      
+      // Video Player State
+      isVideoOpen: false,
+      playingMovie: null,
+      openVideo: (movie) => set({ isVideoOpen: true, playingMovie: movie }),
+      closeVideo: () => set({ isVideoOpen: false, playingMovie: null }),
 
       login: async (email, password) => {
         try {

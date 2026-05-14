@@ -6,7 +6,7 @@ import MovieCard from '../components/MovieCard';
 import { useStore } from '../store/useStore';
 
 export default function Home() {
-  const { movies, genres, fetchMovies, isLoading } = useStore();
+  const { movies, genres, fetchMovies, isLoading, openVideo } = useStore();
   const [featuredMovie, setFeaturedMovie] = useState(null);
 
   useEffect(() => {
