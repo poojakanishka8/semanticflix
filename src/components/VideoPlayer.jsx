@@ -43,15 +43,17 @@ export default function VideoPlayer() {
           className="relative w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-neon border border-white/10"
           onClick={(e) => e.stopPropagation()} // Prevent click from closing when clicking video
         >
-          {/* Using a stock demo video from Google for the video player */}
+          {/* Using a more reliable HTTPS sample video */}
           <video 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
             controls 
             autoPlay 
+            muted
+            playsInline
             name="media"
             poster={playingMovie.banner}
           >
-            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+            <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </motion.div>
