@@ -3,20 +3,30 @@ import { motion } from 'framer-motion';
 import { Play, Info, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
-import { MOVIES, GENRES } from '../data/movies';
+import { useStore } from '../store/useStore';
 
 export default function Home() {
-  const [featuredMovie, setFeaturedMovie] = useState(MOVIES[0]);
+  const { movies, genres, fetchMovies, isLoading } = useStore();
+  const [featuredMovie, setFeaturedMovie] = useState(null);
 
   useEffect(() => {
-    // Randomize featured movie on load
-    const random = Math.floor(Math.random() * MOVIES.length);
-    setFeaturedMovie(MOVIES[random]);
-  }, []);
+    fetchMovies();
+  }, [fetchMovies]);
 
-  const trendingMovies = MOVIES.slice(0, 4);
-  const topRated = [...MOVIES].sort((a, b) => b.rating - a.rating).slice(0, 4);
-  const aiRecommendations = MOVIES.slice(4, 8); // Just dummy data slice
+  useEffect(() => {
+    if (movies.length > 0) {
+      const random = Math.floor(Math.random() * movies.length);
+      setFeaturedMovie(movies[random]);
+    }
+  }, [movies]);
+
+  if (isLoading || !featuredMovie) {
+    return <div className="min-h-screen flex items-center justify-center text-white">Loading Movies...</div>;
+  }
+
+  const trendingMovies = movies.slice(0, 4);
+  const topRated = [...movies].sort((a, b) => b.rating - a.rating).slice(0, 4);
+  const aiRecommendations = movies.slice(4, 8);
 
   const SectionTitle = ({ children, icon: Icon }) => (
     <div className="flex items-center gap-3 mb-8">
@@ -112,7 +122,7 @@ export default function Home() {
         <section>
           <SectionTitle>Popular Genres</SectionTitle>
           <div className="flex flex-wrap gap-4">
-            {GENRES.map((genre, idx) => (
+            {genres.map((genre, idx) => (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}

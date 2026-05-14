@@ -4,23 +4,28 @@ import { motion } from 'framer-motion';
 import { Play, Plus, Check, Star, Calendar, Clock, Film } from 'lucide-react';
 import MovieCard from '../components/MovieCard';
 import { useStore } from '../store/useStore';
-import { MOVIES } from '../data/movies';
 
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const { favorites, addFavorite, removeFavorite } = useStore();
+  const { favorites, addFavorite, removeFavorite, movies, fetchMovies } = useStore();
 
   useEffect(() => {
-    const foundMovie = MOVIES.find(m => m.id === parseInt(id));
-    setMovie(foundMovie);
-    window.scrollTo(0, 0);
-  }, [id]);
+    fetchMovies();
+  }, [fetchMovies]);
+
+  useEffect(() => {
+    if (movies.length > 0) {
+      const foundMovie = movies.find(m => m.id === parseInt(id));
+      setMovie(foundMovie);
+      window.scrollTo(0, 0);
+    }
+  }, [id, movies]);
 
   if (!movie) return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
 
   const isFav = favorites.some(f => f.id === movie.id);
-  const similarMovies = MOVIES.filter(m => m.genre === movie.genre && m.id !== movie.id).slice(0, 4);
+  const similarMovies = movies.filter(m => m.genre === movie.genre && m.id !== movie.id).slice(0, 4);
 
   const toggleFavorite = () => {
     if (isFav) removeFavorite(movie.id);

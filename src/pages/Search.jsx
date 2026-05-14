@@ -2,11 +2,16 @@ import { useState, useEffect } from 'react';
 import { Search as SearchIcon, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MovieCard from '../components/MovieCard';
-import { MOVIES } from '../data/movies';
+import { useStore } from '../store/useStore';
 
 export default function Search() {
+  const { movies, fetchMovies } = useStore();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    fetchMovies();
+  }, [fetchMovies]);
 
   useEffect(() => {
     if (query.trim() === '') {
@@ -15,12 +20,12 @@ export default function Search() {
     }
 
     const lowercaseQuery = query.toLowerCase();
-    const filtered = MOVIES.filter(movie => 
+    const filtered = movies.filter(movie => 
       movie.title.toLowerCase().includes(lowercaseQuery) || 
       movie.genre.toLowerCase().includes(lowercaseQuery)
     );
     setResults(filtered);
-  }, [query]);
+  }, [query, movies]);
 
   return (
     <div className="min-h-screen pt-28 pb-20">

@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import MovieCard from '../components/MovieCard';
-import { MOVIES, GENRES } from '../data/movies';
+import { useStore } from '../store/useStore';
 
 export default function Categories() {
+  const { movies, genres, fetchMovies } = useStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialGenre = searchParams.get('genre') || 'All';
   const [activeGenre, setActiveGenre] = useState(initialGenre);
-  const [filteredMovies, setFilteredMovies] = useState(MOVIES);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+
+  useEffect(() => {
+    fetchMovies();
+  }, [fetchMovies]);
 
   useEffect(() => {
     setActiveGenre(searchParams.get('genre') || 'All');
@@ -16,11 +21,11 @@ export default function Categories() {
 
   useEffect(() => {
     if (activeGenre === 'All') {
-      setFilteredMovies(MOVIES);
+      setFilteredMovies(movies);
     } else {
-      setFilteredMovies(MOVIES.filter(movie => movie.genre === activeGenre));
+      setFilteredMovies(movies.filter(movie => movie.genre === activeGenre));
     }
-  }, [activeGenre]);
+  }, [activeGenre, movies]);
 
   const handleGenreClick = (genre) => {
     setActiveGenre(genre);
@@ -55,7 +60,7 @@ export default function Categories() {
           >
             All Movies
           </button>
-          {GENRES.map((genre) => (
+          {genres.map((genre) => (
             <button
               key={genre}
               onClick={() => handleGenreClick(genre)}
