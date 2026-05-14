@@ -64,11 +64,17 @@ export default function Navbar() {
               <Link to="/favorites" className="text-gray-400 hover:text-white transition-colors">
                 <Heart className="w-5 h-5" />
               </Link>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-purple-600 p-0.5 cursor-pointer">
+              <Link
+                to="/profile"
+                className="hidden lg:block bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm font-bold border border-primary/20 transition-all"
+              >
+                Subscribe
+              </Link>
+              <Link to="/profile" className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-purple-600 p-0.5 cursor-pointer">
                 <div className="w-full h-full bg-surface rounded-full flex items-center justify-center">
                   <User className="w-4 h-4 text-white" />
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
 

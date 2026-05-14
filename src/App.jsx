@@ -14,6 +14,7 @@ import MovieDetails from './pages/MovieDetails';
 import Search from './pages/Search';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 
 // Scroll to top helper
 function ScrollToTop() {
@@ -43,6 +44,7 @@ function AppContent() {
             <Route path="/movie/:id" element={<MovieDetails />} />
             <Route path="/search" element={<Search />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </AnimatePresence>
       </main>
