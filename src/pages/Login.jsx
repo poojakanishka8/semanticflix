@@ -8,14 +8,15 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { login } = useStore();
+  const { login, error } = useStore();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Simulate login
     if (email && password) {
-      login();
-      navigate('/');
+      const success = await login(email, password);
+      if (success) {
+        navigate('/');
+      }
     }
   };
 
