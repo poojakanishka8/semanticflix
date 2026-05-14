@@ -1,4 +1,4 @@
-import { PlayCircle, Github, Linkedin, Mail, Globe } from 'lucide-react';
+import { PlayCircle, Globe, Mail, MessageCircle, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -18,16 +18,16 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors text-white">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors text-white">
-                <Linkedin className="w-5 h-5" />
+                <Globe className="w-5 h-5" />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors text-white">
                 <Mail className="w-5 h-5" />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors text-white">
-                <Globe className="w-5 h-5" />
+                <MessageCircle className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary transition-colors text-white">
+                <Info className="w-5 h-5" />
               </a>
             </div>
           </div>

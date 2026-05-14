@@ -5,6 +5,9 @@ export const useStore = create(
   persist(
     (set) => ({
       favorites: [],
+      isLoggedIn: false,
+      login: () => set({ isLoggedIn: true }),
+      logout: () => set({ isLoggedIn: false }),
       addFavorite: (movie) =>
         set((state) => ({
           favorites: [...state.favorites, movie],

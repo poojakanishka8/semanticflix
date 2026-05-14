@@ -12,6 +12,7 @@ import Categories from './pages/Categories';
 import MovieDetails from './pages/MovieDetails';
 import Search from './pages/Search';
 import Favorites from './pages/Favorites';
+import Login from './pages/Login';
 
 // Scroll to top helper
 function ScrollToTop() {
@@ -24,16 +25,18 @@ function ScrollToTop() {
 
 function AppContent() {
   const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
   
   return (
     <div className="flex flex-col min-h-screen bg-background text-white selection:bg-primary/30">
       <ScrollToTop />
-      <Navbar />
+      {!isLoginPage && <Navbar />}
       
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
             <Route path="/search" element={<Search />} />
@@ -42,7 +45,7 @@ function AppContent() {
         </AnimatePresence>
       </main>
 
-      <Footer />
+      {!isLoginPage && <Footer />}
     </div>
   );
 }
