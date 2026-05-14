@@ -10,6 +10,12 @@ const SECRET_KEY = process.env.JWT_SECRET || 'semanticflix_secret_key_123';
 app.use(cors());
 app.use(express.json());
 
+// List of actual YouTube Trailer IDs for variety
+const TRAILER_IDS = [
+  "dQw4w9WgXcQ", "yS-K2S_vK-M", "j81WpU9ZJio", "6ZfuNTqbHE8", "uYPbbksJxIg",
+  "8hP9D6kZseM", "vM-Bja2Gy04", "YoHD9XEInc0", "64-iSYVmMVY", "S5qJXYL6bsI"
+];
+
 // Generated movies data
 const GENRES = ["Action", "Comedy", "Horror", "Romance", "Thriller", "Sci-Fi", "Adventure"];
 const generateMovies = () => {
@@ -51,8 +57,6 @@ const generateMovies = () => {
     const titles = titlesByGenre[genre];
     for (let i = 0; i < titles.length; i++) {
       const title = titles[i];
-      // Generate deterministic numbers based on id
-      // Using simple hash-like logic so it doesn't change on every server restart
       const pseudoRandom = (idCounter * 137) % 100; 
       const rating = (6.5 + (pseudoRandom / 100) * 3).toFixed(1);
       const hours = (pseudoRandom % 2) + 1;
@@ -68,13 +72,13 @@ const generateMovies = () => {
         year: year,
         description: `Experience the epic journey of ${title}. A critically acclaimed masterpiece in the ${genre} genre that will leave you on the edge of your seat.`,
         poster: `https://picsum.photos/seed/poster_${idCounter}/800/1200`,
-        banner: `https://picsum.photos/seed/banner_${idCounter}/2000/800`
+        banner: `https://picsum.photos/seed/banner_${idCounter}/2000/800`,
+        trailerId: TRAILER_IDS[idCounter % TRAILER_IDS.length] // Assign unique trailer ID
       });
       idCounter++;
     }
   }
 
-  // Shuffle array deterministically
   return movies.sort((a, b) => (a.id * 7 % 10) - (b.id * 7 % 10));
 };
 
@@ -83,13 +87,7 @@ const MOVIES = generateMovies();
 // Login Endpoint
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
-  }
-
-  // Dummy auth logic: Accept any valid-looking email
-  if (email.includes('@')) {
+  if (email && email.includes('@')) {
     const token = jwt.sign({ email, id: 1 }, SECRET_KEY, { expiresIn: '24h' });
     res.json({ token, user: { email, name: email.split('@')[0] } });
   } else {
@@ -100,16 +98,6 @@ app.post('/api/login', (req, res) => {
 // Movies Endpoint
 app.get('/api/movies', (req, res) => {
   res.json({ movies: MOVIES, genres: GENRES });
-});
-
-// Single Movie Endpoint
-app.get('/api/movies/:id', (req, res) => {
-  const movie = MOVIES.find(m => m.id === parseInt(req.params.id));
-  if (movie) {
-    res.json(movie);
-  } else {
-    res.status(404).json({ error: 'Movie not found' });
-  }
 });
 
 app.listen(PORT, () => {

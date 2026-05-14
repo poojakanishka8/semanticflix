@@ -43,11 +43,11 @@ export default function VideoPlayer() {
           className="relative w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-neon border border-white/10"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Using a high-quality YouTube trailer embed for maximum compatibility */}
+          {/* Using the movie's unique dynamic trailer ID from the backend */}
           <iframe 
             className="w-full h-full border-0"
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&rel=0&modestbranding=1" 
-            title="SemanticFlix Video Player"
+            src={`https://www.youtube.com/embed/${playingMovie.trailerId}?autoplay=1&mute=0&rel=0&modestbranding=1`} 
+            title={playingMovie.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowFullScreen
           ></iframe>
